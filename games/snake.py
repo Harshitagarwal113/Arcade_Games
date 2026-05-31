@@ -1,4 +1,5 @@
 import pygame
+import asyncio
 import sys
 import math
 import random
@@ -36,7 +37,7 @@ class SnakeGame:
             if not hasattr(self, 'snake') or (x, y) not in self.snake:
                 return (x, y)
 
-    def run(self):
+    async def run(self):
         running = True
         pulse_anim = 0
         high_score = data.get_high_score("Snake")
@@ -171,4 +172,5 @@ class SnakeGame:
                 screen.blit(shook_surface, (shake_x, shake_y))
 
             pygame.display.update()
+            await asyncio.sleep(0)
 

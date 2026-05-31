@@ -1,4 +1,5 @@
 import pygame
+import asyncio
 import sys
 import math
 import random
@@ -38,7 +39,7 @@ class BrickBreakerGame:
         self.ball_trail = []
         self.combo = 0
 
-    def run(self):
+    async def run(self):
         running = True
         high_score = data.get_high_score("BrickBreaker")
         bg_y = 0
@@ -179,4 +180,5 @@ class BrickBreakerGame:
                 draw_text(screen, "Press SPACE to restart", 20, WIDTH//2, HEIGHT//2 + 40, data.theme["TEXT_MUTED"])
 
             pygame.display.update()
+            await asyncio.sleep(0)
 

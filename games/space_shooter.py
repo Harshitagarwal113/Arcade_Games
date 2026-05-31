@@ -1,4 +1,5 @@
 import pygame
+import asyncio
 import sys
 import math
 import random
@@ -33,7 +34,7 @@ class SpaceShooterGame:
         x = random.randint(50, WIDTH - 50)
         self.aliens.append({'rect': pygame.Rect(x, -40, 40, 30), 'hp': 1})
 
-    def run(self):
+    async def run(self):
         running = True
         high_score = data.get_high_score("SpaceShooter")
         spawn_timer = 0
@@ -163,4 +164,5 @@ class SpaceShooterGame:
                 draw_text(screen, "Press ESC to return to Hub", 20, WIDTH//2, HEIGHT//2 + 180, data.theme["TEXT_MUTED"])
 
             pygame.display.update()
+            await asyncio.sleep(0)
 

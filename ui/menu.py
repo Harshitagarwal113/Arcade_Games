@@ -2,6 +2,7 @@ import pygame
 import sys
 import math
 import random
+import asyncio
 from core.config import WIDTH, HEIGHT, FPS
 import core.data as data
 from core.display import screen, clock
@@ -237,15 +238,16 @@ class SynthGrid:
             if y < HEIGHT:
                 pygame.draw.aaline(surface, data.theme["SHADOW"], (0, y), (WIDTH, y))
 
-def screen_transition(surface, theme):
+async def screen_transition(surface, theme):
     max_radius = int(math.hypot(WIDTH//2, HEIGHT//2)) + 10
     step = max_radius // 15
     for radius in range(0, max_radius, step):
         pygame.draw.circle(surface, data.theme["BG_COLOR"], (WIDTH//2, HEIGHT//2), radius)
         pygame.display.update()
         clock.tick(60)
+        await asyncio.sleep(0)
 
-def main_menu():
+async def main_menu():
     
     
     synth_grid = SynthGrid()
@@ -292,9 +294,9 @@ def main_menu():
                 
             if game_to_launch:
                 sound_click.play()
-                screen_transition(screen, data.theme)
-                game_to_launch.run()
-                screen_transition(screen, data.theme)
+                await screen_transition(screen, data.theme)
+                await game_to_launch.run()
+                await screen_transition(screen, data.theme)
 
         screen.fill(data.theme["BG_COLOR"])
         
@@ -311,9 +313,10 @@ def main_menu():
             card.draw(screen, anim_timer)
 
         pygame.display.update()
+        await asyncio.sleep(0)
 
     pygame.quit()
     sys.exit()
 
 if __name__ == "__main__":
-    main_menu()
+    asyncio.run(main_menu())

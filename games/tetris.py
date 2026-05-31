@@ -1,4 +1,5 @@
 import pygame
+import asyncio
 import sys
 import math
 import random
@@ -112,7 +113,7 @@ class TetrisGame:
             self.floating_texts.append({'x': WIDTH//2, 'y': HEIGHT//2, 'text': f"+{pts}", 'alpha': 255})
             self.flash_alpha = 255
 
-    def run(self):
+    async def run(self):
         running = True
         high_score = data.get_high_score("Tetris")
         
@@ -241,4 +242,5 @@ class TetrisGame:
                 self.flash_alpha = max(0, self.flash_alpha - 15)
 
             pygame.display.update()
+            await asyncio.sleep(0)
 

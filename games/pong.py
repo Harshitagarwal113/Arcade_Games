@@ -1,4 +1,5 @@
 import pygame
+import asyncio
 import sys
 import math
 import random
@@ -33,7 +34,7 @@ class PongGame:
             vy = random.uniform(-5, 5)
             self.particles.append([[x, y], [vx, vy], random.uniform(3, 8), color])
 
-    def run(self):
+    async def run(self):
         running = True
         high_score = data.get_high_score("Pong")
         
@@ -153,4 +154,5 @@ class PongGame:
                 screen.blit(shook_surface, (shake_x, shake_y))
 
             pygame.display.update()
+            await asyncio.sleep(0)
 

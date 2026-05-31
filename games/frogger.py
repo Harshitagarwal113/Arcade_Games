@@ -1,4 +1,5 @@
 import pygame
+import asyncio
 import sys
 import random
 from core.config import WIDTH, HEIGHT, FPS
@@ -39,7 +40,7 @@ class FroggerGame:
             for _ in range(num_obs):
                 self.lanes[-1]['obstacles'].append(pygame.Rect(random.randint(0, WIDTH), y + 5, random.randint(40, 80), 40))
 
-    def run(self):
+    async def run(self):
         running = True
         high_score = data.get_high_score("Frogger")
         
@@ -150,3 +151,4 @@ class FroggerGame:
                 draw_text(screen, "Press SPACE to restart", 20, WIDTH//2, HEIGHT//2 + 40, data.theme["TEXT_MUTED"])
 
             pygame.display.update()
+            await asyncio.sleep(0)

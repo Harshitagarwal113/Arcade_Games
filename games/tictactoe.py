@@ -1,4 +1,5 @@
 import pygame
+import asyncio
 import sys
 import math
 import random
@@ -36,7 +37,7 @@ class TicTacToeGame:
             return "Draw"
         return None
 
-    def run(self):
+    async def run(self):
         running = True
         wins = data.get_high_score("TicTacToe")
         
@@ -138,4 +139,5 @@ class TicTacToeGame:
                 draw_text(screen, f"{self.turn}'s Turn", 30, WIDTH//2, 30, current_color)
 
             pygame.display.update()
+            await asyncio.sleep(0)
 

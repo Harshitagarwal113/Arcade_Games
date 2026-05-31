@@ -1,4 +1,5 @@
 import pygame
+import asyncio
 import sys
 import math
 import random
@@ -297,7 +298,7 @@ def draw_ground(surface, scroll):
         pygame.draw.line(surface, GREEN_PIPE_D, (x, ground_y), (x - 10, ground_y + 15), 3)
 
 class FlappyGame:
-    def run(self):
+    async def run(self):
         bird = Bird()
         pipes = []
         clouds = [Cloud() for _ in range(4)]
@@ -469,4 +470,5 @@ class FlappyGame:
                 flash_alpha = max(0, flash_alpha - 15)
 
             pygame.display.update()
+            await asyncio.sleep(0)
 
