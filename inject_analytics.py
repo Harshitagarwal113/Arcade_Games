@@ -76,7 +76,13 @@ direct_launch_block = """    # Direct arcade launch: bypass click prompt
 if ume_wait_block in content:
     content = content.replace(ume_wait_block, direct_launch_block)
 
-# 5. Inject Vercel Analytics
+# 5. Force ume_block : 0 and autorun : 1 in JavaScript config object
+content = content.replace("ume_block : 1,", "ume_block : 0,")
+content = content.replace("ume_block: 1,", "ume_block: 0,")
+content = content.replace("autorun : 0,", "autorun : 1,")
+content = content.replace("autorun: 0,", "autorun: 1,")
+
+# 6. Inject Vercel Analytics
 analytics_script = """
 <!-- Vercel Analytics -->
 <script>

@@ -12,8 +12,8 @@ source "$VENV_DIR/bin/activate"
 # Install dependencies into virtual environment
 pip install -r requirements.txt
 
-# Build the project (creates build/web directory, --no_opt avoids ffmpeg/asset optimizer crashes)
-python -m pygbag --build --no_opt --disable-sound-format-error .
+# Build the project (creates build/web directory, --no_opt avoids ffmpeg crashes, --ume_block 0 auto-starts game)
+python -m pygbag --build --no_opt --disable-sound-format-error --ume_block 0 .
 
 # Inject Vercel Analytics into the built index.html
 python inject_analytics.py
