@@ -1,5 +1,5 @@
 {
-  "installCommand": "pip install pygbag",
+  "installCommand": "",
   "buildCommand": "bash build.sh",
   "outputDirectory": "build/web",
   "framework": null,
