@@ -248,7 +248,12 @@ async def screen_transition(surface, theme):
         await asyncio.sleep(0)
 
 async def main_menu():
-    
+    try:
+        import platform
+        if hasattr(platform, "window") and hasattr(platform.window, "infobox"):
+            platform.window.infobox.style.display = "none"
+    except Exception:
+        pass
     
     synth_grid = SynthGrid()
     anim_timer = 0

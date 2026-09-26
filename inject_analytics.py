@@ -76,19 +76,50 @@ direct_launch_block = """    # Direct arcade launch: bypass click prompt
 if ume_wait_block in content:
     content = content.replace(ume_wait_block, direct_launch_block)
 
-# 5. Force ume_block : 0 and autorun : 1 in JavaScript config object
+# 5. Hide infobox before shell.source starts the main loop
+old_shell_source = """    def ui_callback(pkg):
+        platform.window.infobox.innerText = f"installing {pkg}"
+
+    await shell.source(main, callback=ui_callback)"""
+
+new_shell_source = """    def ui_callback(pkg):
+        platform.window.infobox.innerText = f"installing {pkg}"
+
+    platform.window.infobox.style.display = "none"
+    await shell.source(main, callback=ui_callback)"""
+
+if old_shell_source in content:
+    content = content.replace(old_shell_source, new_shell_source)
+
+# 6. Force ume_block : 0 and autorun : 1 in JavaScript config object
 content = content.replace("ume_block : 1,", "ume_block : 0,")
 content = content.replace("ume_block: 1,", "ume_block: 0,")
 content = content.replace("autorun : 0,", "autorun : 1,")
 content = content.replace("autorun: 0,", "autorun: 1,")
 
-# 6. Inject Vercel Analytics
+# 7. Inject Vercel Analytics and loader dismiss safety script
 analytics_script = """
 <!-- Vercel Analytics -->
 <script>
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
+
+<script>
+  // Ensure infobox is always dismissed once canvas initializes
+  setTimeout(function() {
+    var box = document.getElementById("infobox");
+    if (box) box.style.display = "none";
+  }, 3500);
+  window.addEventListener("pointerdown", function() {
+    var box = document.getElementById("infobox");
+    if (box) box.style.display = "none";
+  });
+  window.addEventListener("keydown", function() {
+    var box = document.getElementById("infobox");
+    if (box) box.style.display = "none";
+  });
+</script>
 """
 
 if "_vercel/insights/script.js" not in content:
